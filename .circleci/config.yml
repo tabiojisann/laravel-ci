@@ -52,7 +52,6 @@ jobs:
           name: php test
           command: vendor/bin/phpunit
 
-
   deploy:
     docker:
       - image: circleci/php:7.3-node-browsers
@@ -61,13 +60,13 @@ jobs:
       - run:
           name: deploy
           command: |
-          ssh -o StrictHostKeyChecking=no -t webapp@${HOST_NAME} "cd laravel-ci && \
-          git pull origin master && \
-          composer install -n --no-dev --prefer-dist && \
-          npm ci && \
-          npm run prod && \
-          php artisan migrate --force && \
-          php artisan config:cache"
+            ssh -o StrictHostKeyChecking=no -t webapp@${HOST_NAME} "cd laravel-ci && \
+              git pull origin master && \
+              composer install -n --no-dev --prefer-dist && \
+              npm ci && \
+              npm run prod && \
+              php artisan migrate --force && \
+              php artisan config:cache"
 
 workflows:
   version: 2
@@ -76,8 +75,8 @@ workflows:
       - build
       - deploy:
           requires:
-            -build
+            - build
           filters:
             branches:
               only:
-                - master
+                - master        
